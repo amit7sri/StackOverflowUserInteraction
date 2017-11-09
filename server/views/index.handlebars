@@ -1,6 +1,87 @@
 <h2 class="page-header">Welcome user, {{username}}</h2>
 <br/>
-<a href="https://stackoverflow.com/questions/tagged/java?sort=frequent&pageSize=15" id="Stackoverflow">Stackoverflow Link</a>
+
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+<div id="container" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
+
+
+<script>
+// Data gathered from http://populationpyramid.net/germany/2015/
+
+// Age categories
+
+var d;
+$.get( "/uservsall", function( data ){
+	
+d = data;
+console.log(d);
+var categories = ['upvote', 'downvote', 'favorite', 'share'];
+$(document).ready(function () {
+    Highcharts.chart('container', {
+        chart: {
+            type: 'bar'
+        },
+        title: {
+            text: 'Individual user action vs all users'
+        },
+        xAxis: [{
+            categories: categories,
+            reversed: false,
+            labels: {
+                step: 1
+            }
+        }, { // mirror axis on right side
+            opposite: true,
+            reversed: false,
+            categories: categories,
+            linkedTo: 0,
+            labels: {
+                step: 1
+            }
+        }],
+        yAxis: {
+            title: {
+                text: null
+            },
+            labels: {
+                formatter: function () {
+                    return Math.abs(this.value) + '%';
+                }
+            }
+        },
+
+        plotOptions: {
+            series: {
+                stacking: 'normal'
+            }
+        },
+
+        tooltip: {
+            formatter: function () {
+                return '<b>' + this.series.name + ', age ' + this.point.category + '</b><br/>' +
+                    'Population: ' + Highcharts.numberFormat(Math.abs(this.point.y), 0);
+            }
+        },
+
+        series: d
+    });
+});
+});
+</script>
+
+<p><b>Aim:</b>The above graph represents the four actions of logged in user count vs the count of all other user.</p>
+<p><b>Analysis:</b>
+By this user can inferred the how good is participation level. This information is designed for each user individually by calculating the couunt of each action of that user against all other user.
+</br> 
+<b>Interaction:</b>
+Hover: Gives the name and data.
+<p><b>How does it matter:</b>
+This graph is important because by this user will get the info on his dashboard. This type of UI on user dashboard can give sense of gamification and will increase the participation level of each user. The data can be inferred for each action of logged in user vs all users.
+</p>
+</br>
 <br/>
 <p><b>Login History</b></p>
 <div class='asd'>{{loginhistory}}</div>

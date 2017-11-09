@@ -12,11 +12,13 @@
           <ul class="nav nav-pills pull-right">
             {{#if user}}
               <li role="presentation"><a href="/">Dashboard</a></li>
+              <li role="presentation"><a href="https://stackoverflow.com/questions/tagged/java?sort=frequent&pageSize=15">StackOverflow</a></li>
               <li role="presentation"><a href="/users/logout">Logout</a></li>
             {{else}}
               <li role="presentation"><a href="/users/login">Login</a></li>
               <li role="presentation"><a href="/users/register">Register</a></li>
             {{/if}}
+            <li role="presentation"><a href="/dataRoute">Visualization</a></li>
           </ul>
         </nav>
         <h3 class="text-muted">Assignment 1</h3>
